@@ -16,8 +16,9 @@ from main.tasks import receive_broker_task
 
 
 def index(request):
-    
-    receive_broker_task.delay()
+    print("REcieve")
+    print(receive_broker_task.delay())
+    print("REcieve")
 
     return HttpResponse("Hello, world")
  

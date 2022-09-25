@@ -8,15 +8,19 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm
 import ast
 import time
-
-
-
+import paho.mqtt.client as mqtt
+from .models import Event
+from main.tasks import receive_broker_task
 
 
 
 
 def index(request):
+    
+    receive_broker_task.delay()
+
     return HttpResponse("Hello, world")
+ 
  
 def update_user_data(user):
     Profile.objects.update_or_create(user=user, defaults={'mobile': user.profile.mobile, },)

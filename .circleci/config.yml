@@ -30,10 +30,9 @@ jobs:
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
-      - checkout:
-          path: ~/SmartCities/
+      - checkout
       - run:
-          command: ls
+          command: ls -a
       - python/install-packages:
           pkg-manager: pip
           #app-dir: ~/SmartCities/ # If you're requirements.txt isn't in the root directory.

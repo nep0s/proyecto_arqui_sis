@@ -32,6 +32,8 @@ jobs:
     steps:
       - checkout:
           path: ~/SmartCities/
+      - run:
+          command: ls
       - python/install-packages:
           pkg-manager: pip
           #app-dir: ~/SmartCities/ # If you're requirements.txt isn't in the root directory.

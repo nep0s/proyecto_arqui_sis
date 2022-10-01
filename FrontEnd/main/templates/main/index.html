@@ -1,0 +1,107 @@
+<style>
+    p {
+        text-align: right;
+        margin-right: 5%;
+
+    }
+    h2 {
+        
+        margin-left: 5%;
+        margin-top: 3%;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 90%;
+      margin-left: 5%;
+      margin-right:5%;
+
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    ul {
+        text-align: center;
+    }
+    ul > li {
+    display: inline-block;
+    }
+    </style>
+    </head>
+    <body>
+    
+    <h2>Events</h2>
+    
+    <p > Workers Service: Active</p>
+      
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Lat</th>
+        <th>Lon</th>
+        <th>Location</th>
+        <th>Message</th>
+        <th>Level</th>
+        <th>Details</th>
+
+    
+    
+      </tr>
+      {% for x in users %}
+     
+      
+      <tr>
+        
+        <td>{{x.id}}</td>
+        <td>{{x.type}}</td>
+        <td>{{x.lat}}</td>
+        <td>{{x.lon}}</td>
+        <td>{{x.location}}</td>
+        <td>{{x.message}}</td>
+        <td>{{x.level}}</td>
+        <td><a href="{% url 'detail' x.id %}"> Check</a></td>
+
+
+        
+    
+      </tr>
+    
+    
+    {% endfor %}
+      
+    </table>
+    
+  
+  {% if users.has_other_pages %}
+    <ul class="pagination">
+      {% if users.has_previous %}
+        <li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in users.paginator.page_range %}
+        {% if users.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if users.has_next %}
+        <li><a href="?page={{ users.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+
+  
+  

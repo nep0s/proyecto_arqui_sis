@@ -12,22 +12,27 @@ port:9000
 }
 
 const { Client } = require('pg');
+const { doesNotMatch } = require('assert');
     //:host => 'db', :user => 'postgres', :password =>'password', :port => '5432'
-    const client1 = new Client({
-        host: 'db',
-        user: 'admin',
-        password: '1234',
-        port: 5432,
-        database:'SmartCities'
-    });
 
-    const insertLoc = async (type, lat, lon, location, message, level) => {
+
+    const insertLoc = async (type1, lat, lon, location, message, level) => {
+        const client1 = new Client({
+            host: 'db',
+            user: 'admin',
+            password: '1234',
+            port: 5432,
+            database:'SmartCities'
+        });
         try {
             await client1.connect(); 
             await client1.query(
-                `INSERT INTO "maps" ("type", "lat", "lon", "location", "message", "level")  
-                VALUES ($1, $2, $3, $4, $5, $6)`, [type, lat, lon, location, message, level]); // sends queries
+                `INSERT INTO "maps" ("type1", "lat", "lon", "location", "message", "level")  
+                VALUES ($1, $2, $3, $4, $5, $6)`, [type1, lat, lon, location, message, level]); // sends queries
+            await client1.end(); 
+            
             return true;
+
         } catch (error) {
             console.error(error.stack);
             return false;
@@ -41,18 +46,14 @@ var client  = mqtt.connect('mqtt://planetaryevents.iic2173.net',options);
 console.log("connected flag  " + client.connected);
 client.subscribe(topic)
 
-client.on("connect",function(){	
-console.log("connected  "+ client.connected);
-});
-//handl;e incoming messages
-client.subscribe(topic)
+
+
 client.on('message',function(topic, message, packet){
 	console.log("message is "+ message);
 	console.log("topic is "+ topic);
     var dic = JSON.parse(message)
-    console.log(dic["type"])
     
-    insertLoc(dic["type"], dic["lat"], dic["lon"], dic["location"], dic["message"],dic["level"]).then(result => {
+    insertLoc(dic["type1"], dic["lat"], dic["lon"], dic["location"], dic["message"],dic["level"]).then(result => {
         if (result) {
             console.log('locación insertada');
         }

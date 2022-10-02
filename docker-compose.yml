@@ -16,16 +16,27 @@ services:
       dockerfile: Dockerfile # The name of the Dockerfile definition
       
   web:
-    build: .
+    build: 
+      context: ./SmartCities # The path in the machine that have the files, in this case root
+      dockerfile: Dockerfile
     command: python3.10 manage.py runserver 0.0.0.0:8000
     env_file:
       - ./.envs/.postgres
     volumes:
-      - .:/code
+      - .:/SmartCities/code
     ports:
       - "8000:8000"
     depends_on:
       - db
+  front:
+    build: 
+      context: ./FrontEnd # The path in the machine that have the files, in this case root
+      dockerfile: Dockerfile
+    command: python3.10 manage.py runserver 0.0.0.0:2000
+    volumes:
+      - .:/FrontEnd/code
+    ports:
+      - "2000:2000"
 
 volumes:
     pgdata:

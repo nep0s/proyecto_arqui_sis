@@ -1,4 +1,4 @@
-from .models import Profile
+
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate,login
 from django.http import HttpResponse
@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, LogInForm
 import ast
 import time
-from .models import Event
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import requests
@@ -19,10 +19,11 @@ def index(request):
 
     
     print("REcieve")
-    ob =Event.objects.values()
-    print(ob)
+    # ob =Event.objects.values()
+    # print(ob)
 
-    user_list = ob
+    # user_list = ob
+    user_list = {}
     page = request.GET.get('page', 1)
 
     paginator = Paginator(user_list, 25)
@@ -44,19 +45,19 @@ def event_detail(request, id):
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        if form.is_valid():
-            url = 'http://localhost:8000/users/signup/'
-            myobj ={"password":form.cleaned_data.get('password1'),"password_confirmation":form.cleaned_data.get('password2'),
-            "first_name":form.cleaned_data.get('username'),"last_name":form.cleaned_data.get('username'),"email":form.cleaned_data.get('email'),"username": form.cleaned_data.get('username')}
+        
+        url = 'http://proyecto-base-grupo-24-web-1:8000/users/signup/'
+        myobj ={"password":request.POST.get('password1'),"password_confirmation":request.POST.get('password2'),
+        "first_name":request.POST.get('username'),"last_name":request.POST.get('username'),"email":request.POST.get('email'),"username": request.POST.get('username')}
 
-            x = requests.post(url, json = myobj , verify=False)
+        x = requests.post(url, json = myobj , verify=False)
 
-            print(x.status_code)
-            if x.status_code == 201:
-            # redirect user to home page
-                return redirect('index')
-            else:
-                print(x.text)
+        print(x.status_code)
+        if x.status_code == 201:
+        # redirect user to home page
+            return redirect('index')
+        else:
+            print(x.text)
     else:
         form = SignUpForm()
     return render(request, 'main/signup.html', {'form': form})
@@ -67,7 +68,7 @@ def login_request(request):
 		print(request.POST.get('username'))
 		username = request.POST.get('email')
 		password = request.POST.get('password')
-		url = 'http://localhost:8000/users/login/'
+		url = 'http://proyecto-base-grupo-24-web-1:8000/users/login/'
 		myobj ={"password":password,"email": username}
 		x = requests.post(url, json = myobj , verify=False)
 		if x.status_code == 201:

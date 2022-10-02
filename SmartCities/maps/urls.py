@@ -14,4 +14,6 @@ router.register(r'maps', views.map_list, basename='maps')
 
 urlpatterns = [
     path('maps/', views.map_list),
+    path('maps/<int:id>', views.map_detail),
+
 ]

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, LogInForm
 import ast
 import time
-
+import json
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import requests
@@ -16,14 +16,17 @@ import requests
 
 def index(request):
 
-
+    #url = 'http://localhost:8000/maps/'
+    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/'
+    x = requests.get(url)
+    #print(x.content)
     
-    print("REcieve")
-    # ob =Event.objects.values()
-    # print(ob)
+    ob = json.loads(x.content)
+    print(ob)
 
-    # user_list = ob
-    user_list = {}
+    user_list = ob
+    
+    # user_list = {}
     page = request.GET.get('page', 1)
 
     paginator = Paginator(user_list, 25)
@@ -35,6 +38,8 @@ def index(request):
         users = paginator.page(paginator.num_pages)
 
     return render(request=request,template_name='main/index.html', context= { 'users': users })
+    #return render(request=request,template_name='main/index.html', context= { })
+
  
 def event_detail(request, id):
     obj = Event.objects.get(pk=id)

@@ -27,7 +27,7 @@ const { doesNotMatch } = require('assert');
         try {
             await client1.connect(); 
             await client1.query(
-                `INSERT INTO "maps" ("type1", "lat", "lon", "location", "message", "level")  
+                `INSERT INTO "maps_maps" ("type1", "lat", "lon", "location", "message", "level")  
                 VALUES ($1, $2, $3, $4, $5, $6)`, [type1, lat, lon, location, message, level]); // sends queries
             await client1.end(); 
             

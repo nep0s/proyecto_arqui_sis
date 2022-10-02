@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'users',
     'rest_framework.authtoken',
+    'maps',
     
 ]
 
@@ -77,6 +78,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "SmartCities.wsgi.application"
+
 
 
 # Database

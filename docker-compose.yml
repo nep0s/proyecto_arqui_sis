@@ -10,7 +10,7 @@ services:
 
   node:
     depends_on:
-      - db
+      - web
     build:
       context: ./broker # The path in the machine that have the files, in this case root
       dockerfile: Dockerfile # The name of the Dockerfile definition

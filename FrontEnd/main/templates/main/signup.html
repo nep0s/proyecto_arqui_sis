@@ -1,5 +1,5 @@
 {% block content %}  
-  
+{% csrf_token %}
 <h2>Sign up</h2>
  <form method="post">
     {% csrf_token %}
@@ -10,9 +10,7 @@
         {% if field.help_text %}
           <small style="color: grey">{{ field.help_text }}</small>
         {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
+        
       </p>
     {% endfor %}
     <button type="submit">Sign up</button>

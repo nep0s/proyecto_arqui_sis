@@ -18,3 +18,11 @@ venv/
 # JavaScript
 node_modules/
 build/ # Webpack build output
+
+.vscode/
+*.log
+*.pot
+*.pyc
+.envs
+media/
+*.DS.store

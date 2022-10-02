@@ -42,8 +42,11 @@ def index(request):
 
  
 def event_detail(request, id):
-    obj = Event.objects.get(pk=id)
-    print("HOLAAAA", id)
+    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/{}'.format(id)
+    x = requests.get(url)
+    obj=json.loads(x.content)
+   
+   
     return render(request=request,template_name='main/event_detail.html',context= {'id': obj})
 
     

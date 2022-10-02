@@ -41,6 +41,7 @@
     display: inline-block;
     }
     </style>
+
     </head>
     <body>
     
@@ -67,7 +68,7 @@
         
         <td>{{id.id}}</td>
         <td>{{id.message}}</td>
-        <td id="estado">Pending</td>
+        <td id="estado">{{state}}</td>
         
         
         
@@ -85,8 +86,11 @@
       
     </table>
 
-    <button type="button" id="dificultad">Calculate Difficulty</button>
-    <script rel="text/javascript" src= "../../functions/workers_connection.js"></script>
+    <button type="button" id="dificultad" >Calculate Difficulty</button>
+    <form action="#" method="get">
+      <input type="text" value="8" name="mytextbox" size="1" hidden/>
+      <input type="submit" class="btn" value="Revisar dificultad" name="mybtn">
+     </form>
     </body>
   
   

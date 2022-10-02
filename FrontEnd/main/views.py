@@ -40,15 +40,6 @@ def index(request):
     return render(request=request,template_name='main/index.html', context= { 'users': users })
     #return render(request=request,template_name='main/index.html', context= { })
 
- 
-def event_detail(request, id):
-    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/{}'.format(id)
-    x = requests.get(url)
-    obj=json.loads(x.content)
-   
-   
-    return render(request=request,template_name='main/event_detail.html',context= {'id': obj})
-
     
 def signup(request):
     if request.method == 'POST':
@@ -89,4 +80,22 @@ def login_request(request):
 	else:
 		form = LogInForm()
 	return render(request=request, template_name="main/login.html", context={"login_form":form})
+
+ 
+def event_detail(request, id):
+    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/{}'.format(id)
+    print(request)
+    x = requests.get(url)
+    obj=json.loads(x.content)
+
+    context = {'id': obj, 'state': 'Unknown'}
+    #context = {'id': obj, 'state': 'obj.state'}
+
+    #   Se ejecuta al apretar el boton
+    if(request.GET.get('mybtn')):
+        context['state'] = 'Pending'
+
+   
+    return render(request=request,template_name='main/event_detail.html',context=context)
+
 	

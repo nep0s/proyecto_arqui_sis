@@ -1,3 +1,5 @@
+link de la plataforma: http://18.232.245.49:2000/main/
+
 # IIC2173 - E1 - ERT DIY
 *aka. Equipos de respuesta temprana, versión hazlo tu mismo*  
 *Cambie este README.md por instrucciones para usar su proyecto*  

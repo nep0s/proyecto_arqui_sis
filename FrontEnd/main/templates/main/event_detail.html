@@ -1,0 +1,99 @@
+<style>
+    p {
+        text-align: right;
+        margin-right: 5%;
+
+    }
+    button {
+        margin-top: 3%;
+        margin-left: 5%;
+        
+
+    }
+    h2 {
+        
+        margin-left: 5%;
+        margin-top: 3%;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 90%;
+      margin-left: 5%;
+      margin-right:5%;
+
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    ul {
+        text-align: center;
+    }
+    ul > li {
+    display: inline-block;
+    }
+    </style>
+
+    </head>
+    <body>
+    
+    <h2>Event Detail</h2>
+    
+    <p > Workers Service: Active</p>
+      
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Message</th>
+        <th>Difficulty</th>
+        
+
+        
+
+    
+    
+      </tr>
+
+     
+      
+      <tr>
+        
+        <td>{{id.id}}</td>
+        <td>{{id.message}}</td>
+        <td id="estado">{{state}}</td>
+        
+        
+        
+        
+
+       
+
+
+        
+    
+      </tr>
+    
+    
+
+      
+    </table>
+
+    <button type="button" id="dificultad" >Calculate Difficulty</button>
+    <form action="#" method="get">
+      <input type="text" value="8" name="mytextbox" size="1" hidden/>
+      <input type="submit" class="btn" value="Revisar dificultad" name="mybtn">
+     </form>
+    </body>
+  
+  
+
+  
+  

@@ -12,3 +12,8 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'mobile','email', 'password1', 'password2', )
         labels = {'mobile': 'Mobile Number'} # newly added
+
+class LogInForm(forms.Form):
+    email= forms.CharField(max_length=100)
+    password= forms.CharField(max_length=100)
+    

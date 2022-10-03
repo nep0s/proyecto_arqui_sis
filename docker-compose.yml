@@ -1,0 +1,71 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    env_file:
+      - ./.envs/.postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  node:
+    depends_on:
+      - web
+    build:
+      context: ./broker # The path in the machine that have the files, in this case root
+      dockerfile: Dockerfile # The name of the Dockerfile definition
+      
+  web:
+    build: 
+      context: ./SmartCities # The path in the machine that have the files, in this case root
+      dockerfile: Dockerfile
+    command: python3.10 manage.py runserver 0.0.0.0:8000
+    env_file:
+      - ./.envs/.postgres
+    volumes:
+      - .:/SmartCities/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  front:
+    build: 
+      context: ./FrontEnd # The path in the machine that have the files, in this case root
+      dockerfile: Dockerfile
+    command: python3.10 manage.py runserver 0.0.0.0:2000
+    volumes:
+      - .:/FrontEnd/code
+    ports:
+      - "2000:2000"
+
+  redis:
+    image: redis:7.0.0-alpine
+
+  celery-worker:
+    build:
+      context: ./complejidad
+      dockerfile: Dockerfile
+    command: celery -A celery.app worker -l INFO --concurrency=4 --purge
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+
+  celery_beat:
+    build:
+      context: ./complejidad
+      dockerfile: Dockerfile
+    command: celery -A celery.app beat -l INFO
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+  nginx:
+    build: ./nginx
+    ports: 
+      - 80:80
+    depends_on:
+      - web
+
+volumes:
+    pgdata:

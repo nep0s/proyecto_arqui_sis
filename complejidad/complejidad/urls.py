@@ -23,3 +23,5 @@ urlpatterns = [
     path('complejidad/<int:id>', views.complejidad_detail),
     path('heartbeat/', views.heartbeat),
 ]
+
+

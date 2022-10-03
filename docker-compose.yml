@@ -38,5 +38,34 @@ services:
     ports:
       - "2000:2000"
 
+  redis:
+    image: redis:7.0.0-alpine
+
+  celery-worker:
+    build:
+      context: ./complejidad
+      dockerfile: Dockerfile
+    command: celery -A celery.app worker -l INFO --concurrency=4 --purge
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+
+  celery_beat:
+    build:
+      context: ./complejidad
+      dockerfile: Dockerfile
+    command: celery -A celery.app beat -l INFO
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+  nginx:
+    build: ./nginx
+    ports: 
+      - 80:80
+    depends_on:
+      - web
+
 volumes:
     pgdata:

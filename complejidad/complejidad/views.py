@@ -2,9 +2,11 @@ from shutil import disk_usage
 from django.http import JsonResponse
 from .models import complejidad
 from .serializers import complejidadSerializer
+from task import calcular
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+
 
 
 @api_view(['GET', 'POST'])
@@ -24,6 +26,7 @@ def complejidad_list(request):
 
 
 
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def complejidad_detail(request, id):
 
@@ -36,17 +39,8 @@ def complejidad_detail(request, id):
         serializer = complejidadSerializer(complejidads)
         suma = 0
         todos = complejidad.objects.all()
-        todosserializer = complejidadSerializer(todos, many=True)
-        distancia = 1
-        print(len(todosserializer.data))
-        if len(todosserializer.data) < 1999:
-            distancia = len(todosserializer.data)
-        else:
-            distancia = 1999
-        for n in range(0, distancia):
-            distancia = (abs((serializer.data['lat'] - todosserializer.data[n]['lat'])**2) + (abs(serializer.data['lon'] - todosserializer.data[n]['lon'])**2))**(1/2)
-            nivel = todosserializer.data[n]['level']
-            suma += ((nivel/100)*distancia)
+        todosserializer = complejidadSerializer(todos, many=True)  
+        suma = calcular.delay(todosserializer.data, serializer)
         return Response(suma)
     elif request.method == 'PUT':
         serializer = complejidadSerializer(complejidads, data=request.data)
@@ -64,7 +58,9 @@ def heartbeat(request):
     return Response(True)
 
 
-    
+
+
+
 
 
     

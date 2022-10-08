@@ -19,13 +19,13 @@ services:
     build: 
       context: ./SmartCities # The path in the machine that have the files, in this case root
       dockerfile: Dockerfile
-    command: python3.10 manage.py runserver 0.0.0.0:9000
+    command: python3.10 manage.py runserver 0.0.0.0:8000
     env_file:
       - ./.envs/.postgres
     volumes:
       - .:/SmartCities/code
     ports:
-      - "9000:9000"
+      - "8000:8000"
     depends_on:
       - db
   front:
@@ -38,34 +38,14 @@ services:
     ports:
       - "2000:2000"
 
-  
-########
   redis:
-      image: redis:7.0.0-alpine
+    image: redis:7.0.0-alpine
 
-  worker:
+  celery-worker:
     build:
-        context: ./workers
-        dockerfile: Dockerfile
-    command: uvicorn main:app --reload  --host 0.0.0.0
-    volumes:
-      - ./workers:/opt/
-    env_file:
-      - ./workers/.env
-    depends_on:
-      - redis
-    expose:
-      - 8000
-    ports:
-      - "8000:8000"
-
-  celery_worker:
-    build:
-      context: ./workers
+      context: ./complejidad
       dockerfile: Dockerfile
-    # concurrency specifies number of workers
-    # purge deletes the broker queue every time it starts up
-    command: celery -A main.celery_app worker -l INFO --concurrency=4 --purge
+    #command: celery -A celery.app worker -l INFO --concurrency=4 --purge
     volumes:
       - .:/code
     depends_on:
@@ -73,14 +53,13 @@ services:
 
   celery_beat:
     build:
-      context: ./workers
+      context: ./complejidad
       dockerfile: Dockerfile
-    command: celery -A main.celery_app beat -l INFO
+    command: celery -A celery.app beat -l INFO
     volumes:
       - .:/code
     depends_on:
       - redis
-
   nginx:
     build: ./nginx
     ports: 
@@ -88,9 +67,5 @@ services:
     depends_on:
       - web
 
-
-  
-######
 volumes:
     pgdata:
-    postgres_data:

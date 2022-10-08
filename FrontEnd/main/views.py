@@ -17,7 +17,7 @@ import requests
 def index(request):
 
     #url = 'http://localhost:8000/maps/'
-    url = 'http://proyecto-base-grupo-24-web-1:9000/maps/'
+    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/'
     x = requests.get(url)
     #print(x.content)
     

@@ -45,7 +45,7 @@ services:
     build:
       context: ./complejidad
       dockerfile: Dockerfile
-    command: celery -A celery.app worker -l INFO --concurrency=4 --purge
+    #command: celery -A celery.app worker -l INFO --concurrency=4 --purge
     volumes:
       - .:/code
     depends_on:

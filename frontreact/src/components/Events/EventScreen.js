@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import api from '../../api';
 import EventTable from './EventTable';
@@ -7,7 +8,8 @@ export const EventScreen = () => {
     const [events, setEvents]= useState([]);
 
     const peticionGet=async()=>{
-        await api.get('maps/')
+        // await api.get('maps/')
+        axios.get("/web/maps/")
             .then(response=>{
                 setEvents(response.data);
             }).catch(error=>{

@@ -5,3 +5,6 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip3.10 install -r requirements.txt
 COPY . /code/
+
+
+

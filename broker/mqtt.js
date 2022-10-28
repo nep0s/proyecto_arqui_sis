@@ -53,7 +53,7 @@ client.on('message',function(topic, message, packet){
 	console.log("topic is "+ topic);
     var dic = JSON.parse(message)
     
-    insertLoc(dic["type1"], dic["lat"], dic["lon"], dic["location"], dic["message"],dic["level"]).then(result => {
+    insertLoc(dic["type"], dic["lat"], dic["lon"], dic["location"], dic["message"],dic["level"]).then(result => {
         if (result) {
             console.log('locación insertada');
         }

@@ -4,6 +4,12 @@
         margin-right: 5%;
 
     }
+    button {
+        margin-top: 3%;
+        margin-left: 5%;
+        
+
+    }
     h2 {
         
         margin-left: 5%;
@@ -35,6 +41,7 @@
     display: inline-block;
     }
     </style>
+
     </head>
     <body>
     
@@ -47,7 +54,7 @@
         <th>ID</th>
         <th>Message</th>
         <th>Difficulty</th>
-        <th></th>
+        
 
         
 
@@ -61,8 +68,10 @@
         
         <td>{{id.id}}</td>
         <td>{{id.message}}</td>
-        <td>Pendiente</td>
-        <td><a href="Google.com"> Calculate Difficulty</a></td>
+        <td id="estado">{{state}}</td>
+        
+        
+        
         
 
        
@@ -76,7 +85,13 @@
 
       
     </table>
-    
+
+    <button type="button" id="dificultad" >Calculate Difficulty</button>
+    <form action="#" method="get">
+      <input type="text" value="8" name="mytextbox" size="1" hidden/>
+      <input type="submit" class="btn" value="Revisar dificultad" name="mybtn">
+     </form>
+    </body>
   
   
 

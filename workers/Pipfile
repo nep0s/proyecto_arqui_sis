@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+uvicorn = "==0.17.6"
+alembic = "==1.7.7"
+fastapi = "==0.77.1"
+celery = {version = "==5.2.7", extras = ["redis"]}
+python-dotenv = "==0.20.0"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

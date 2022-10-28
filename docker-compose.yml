@@ -24,8 +24,8 @@ services:
       - ./.envs/.postgres
     volumes:
       - .:/SmartCities/code
-    ports:
-      - "9000:9000"
+    expose:
+      - 9000
     depends_on:
       - db
   front:
@@ -54,8 +54,6 @@ services:
       - redis
     expose:
       - 8000
-    ports:
-      - "8000:8000"
 
   celery_worker:
     build:

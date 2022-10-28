@@ -8,8 +8,7 @@ export const EventScreen = () => {
     const [events, setEvents]= useState([]);
 
     const peticionGet=async()=>{
-        // await api.get('maps/')
-        axios.get("/web/maps/")
+        await api.get('events/')
             .then(response=>{
                 setEvents(response.data);
             }).catch(error=>{

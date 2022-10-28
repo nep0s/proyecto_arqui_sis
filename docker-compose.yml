@@ -30,13 +30,13 @@ services:
       - db
   front:
     build: 
-      context: ./FrontEnd # The path in the machine that have the files, in this case root
+      context: ./frontreact # The path in the machine that have the files, in this case root
       dockerfile: Dockerfile
-    command: python3.10 manage.py runserver 0.0.0.0:2000
     volumes:
-      - .:/FrontEnd/code
+      - './frontreact/src:/app/src'
+      - '/app/node_modules'
     ports:
-      - "2000:2000"
+      - "3000:3000"
 
   redis:
     image: redis:7.0.0-alpine

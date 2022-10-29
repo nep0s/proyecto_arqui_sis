@@ -17,12 +17,11 @@ import requests
 def index(request):
 
     #url = 'http://localhost:8000/maps/'
-    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/'
+    url = 'http://proyecto-base-grupo-24-web-1:9000/maps/'
     x = requests.get(url)
     #print(x.content)
     
     ob = json.loads(x.content)
-    print(ob)
 
     user_list = ob
     
@@ -45,13 +44,13 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         
-        url = 'http://proyecto-base-grupo-24-web-1:8000/users/signup/'
+        url = 'http://proyecto-base-grupo-24-web-1:9000/users/signup/'
         myobj ={"password":request.POST.get('password1'),"password_confirmation":request.POST.get('password2'),
         "first_name":request.POST.get('username'),"last_name":request.POST.get('username'),"email":request.POST.get('email'),"username": request.POST.get('username')}
 
         x = requests.post(url, json = myobj , verify=False)
 
-        print(x.status_code)
+        #print(x.status_code)
         if x.status_code == 201:
         # redirect user to home page
             return redirect('index')
@@ -64,10 +63,10 @@ def signup(request):
 def login_request(request):
 	if request.method == "POST":
 		form = LogInForm(request.POST)
-		print(request.POST.get('username'))
+		#print(request.POST.get('username'))
 		username = request.POST.get('email')
 		password = request.POST.get('password')
-		url = 'http://proyecto-base-grupo-24-web-1:8000/users/login/'
+		url = 'http://proyecto-base-grupo-24-web-1:9000/users/login/'
 		myobj ={"password":password,"email": username}
 		x = requests.post(url, json = myobj , verify=False)
 		if x.status_code == 201:
@@ -75,7 +74,7 @@ def login_request(request):
 			return redirect('index')
             
 		else:
-			print(x.text)
+			#print(x.text)
 			messages.error(request,"Invalid username or password.")
 	else:
 		form = LogInForm()
@@ -83,8 +82,8 @@ def login_request(request):
 
  
 def event_detail(request, id):
-    url = 'http://proyecto-base-grupo-24-web-1:8000/maps/{}'.format(id)
-    print(request)
+    url = 'http://proyecto-base-grupo-24-web-1:9000/maps/{}'.format(id)
+    #print(request)
     x = requests.get(url)
     obj=json.loads(x.content)
 
@@ -92,7 +91,19 @@ def event_detail(request, id):
     #context = {'id': obj, 'state': 'obj.state'}
 
     #   Se ejecuta al apretar el boton
-    if(request.GET.get('mybtn')):
+    if (request.GET.get('mybtn')):
+        print("paso por acaaaa")
+        url = 'http://proyecto-base-grupo-24-web-1:9000/maps/{}'.format(id)
+        myobj ={"id": obj}
+        x = requests.post(url, json = myobj , verify=False)
+        if x.status_code == 201:
+            print("no paso11")
+        # redirect user to home page
+            return redirect('index')
+        else:
+            print("paso")
+            #print(x.text)
+            
         context['state'] = 'Pending'
 
    

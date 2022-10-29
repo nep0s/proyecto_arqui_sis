@@ -133,9 +133,9 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_PAYLOAD_GET_USERNAME_HANDLER':
-        'auth0authorization.utils.jwt_get_username_from_payload_handler',
+        'SmartCities.utils.jwt_get_username_from_payload_handler',
     'JWT_DECODE_HANDLER':
-        'auth0authorization.utils.jwt_decode_token',
+        'SmartCities.utils.jwt_decode_token',
     'JWT_ALGORITHM': 'RS256',
     'JWT_AUDIENCE': 'http://proyecto-base-grupo-24-web-1:8000',
     'JWT_ISSUER': 'https://dev-q8frvdoypr2a0xf3.us.auth0.com/',

@@ -180,4 +180,4 @@ MEDIA_URL = '/media/'
 AUTH_USER_MODEL = 'users.User'
 
 #Cors
-CORS_ALLOWED_ORIGINS = [""]
+CORS_ALLOWED_ORIGINS = ["*"]

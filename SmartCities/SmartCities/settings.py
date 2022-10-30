@@ -46,10 +46,13 @@ INSTALLED_APPS = [
     'users',
     'rest_framework.authtoken',
     'maps',
+    "corsheaders",
     
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -58,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'django.contrib.auth.middleware.RemoteUserMiddleware',
+   
 ]
 
 ROOT_URLCONF = "SmartCities.urls"
@@ -175,3 +179,5 @@ MEDIA_URL = '/media/'
 
 AUTH_USER_MODEL = 'users.User'
 
+#Cors
+CORS_ALLOWED_ORIGINS = [""]

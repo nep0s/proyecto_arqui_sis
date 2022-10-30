@@ -59,11 +59,12 @@ def map_list(request):
     """
     List all code snippets, or create a new snippet.
     """
-
+    
     if request.method == 'GET':
         maps = Maps.objects.all()[0:5000]
         serializer = MapSerializer(maps, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return JsonResponse(serializer.data, safe = False)
+        
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)

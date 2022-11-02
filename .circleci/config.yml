@@ -43,6 +43,23 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: pytest
+  
+  build-test-deploy:
+    working_directory: ~/app/frontreact
+    docker:
+      - image: cimg/python:3.10.7-node
+    steps:
+      - checkout:
+          path: ~/app
+      - run: python --version
+      - run: pip --version
+      - node/install-packages:
+          pkg-manager: npms
+      # - run: npm test
+      - run: pip install awscli --upgrade
+      - run: aws --version
+      - run: aws s3 ls
+      - run: npm run deploy
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -51,3 +68,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
+      - build-test-deploy

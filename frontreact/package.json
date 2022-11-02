@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy-s3": "aws s3 sync build/ s3://ayudantia-cd-2022-2 --delete",
+    "deploy-s3": "aws s3 sync build/ s3://cd-frontend --delete",
     "invalidate-cloudfront": "aws cloudfront create-invalidation --distribution-id EM3FMU62T3JYO --paths '/*'",
     "deploy": "yarn build && yarn run deploy-s3 && yarn run invalidate-cloudfront"
   },

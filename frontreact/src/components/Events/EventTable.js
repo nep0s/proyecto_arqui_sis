@@ -31,7 +31,7 @@ export const EventTable = ({ events }) => {
                         currentTableData.map(event =>
                             <tr key={event.id}>
                                 <td >{ event.id }</td>
-                                <td>{ event.type }</td>
+                                <td>{ event.type1 }</td>
                                 <td>{ event.lat }</td>
                                 <td>{ event.lon }</td>
                                 <td>{ event.location }</td>

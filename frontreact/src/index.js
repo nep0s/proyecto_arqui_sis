@@ -6,6 +6,11 @@ import reportWebVitals from './reportWebVitals';
 
 import { Auth0Provider } from "@auth0/auth0-react";
 
+
+import LoginButton from './components/Auth/LogInButton';
+import LogOutButton from './components/Auth/LogOutButton';
+import Profile from './components/Auth/Profile';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Auth0Provider
@@ -16,6 +21,9 @@ root.render(
     scope="read:events"
   >
   <React.StrictMode>
+    <LoginButton/>
+    <LogOutButton/>
+    <Profile/>
     <App />
   </React.StrictMode>
   </Auth0Provider>

@@ -4,17 +4,14 @@ import Pagination from "./Pagination"
 import { useNavigate } from 'react-router-dom';
 let PageSize = 25;
 export const EventTable = ({ events }) => {
-
+    
     const [currentPage, setCurrentPage] = useState(1);
-    const currentTableData = useMemo((events) => {
+    const navigate = useNavigate();
+    const currentTableData = useMemo(() => {
         const firstPageIndex = (currentPage - 1) * PageSize;
         const lastPageIndex = firstPageIndex + PageSize;
         return events.slice(firstPageIndex, lastPageIndex);
     }, [currentPage]);
-    const navigate = useNavigate();
-    const handleEventDetails = (id) => {
-        navigate(`/${id}`);
-    }
 
     return (
         <div className="px-3" >
@@ -32,8 +29,8 @@ export const EventTable = ({ events }) => {
                     </tr>
                     {
                         currentTableData.map(event =>
-                            <tr>
-                                <td>{ event.id }</td>
+                            <tr key={event.id}>
+                                <td >{ event.id }</td>
                                 <td>{ event.type }</td>
                                 <td>{ event.lat }</td>
                                 <td>{ event.lon }</td>
@@ -41,7 +38,7 @@ export const EventTable = ({ events }) => {
                                 <td>{ event.message }</td>
                                 <td>{ event.level }</td>
                                 <td><button className="btn btn-link"
-                                    onClick={ handleEventDetails(event.id) }
+                                    onClick={ () => {navigate(`/${event.id}`) }}
                                     >
                                     Ver detalles
                                     </button>

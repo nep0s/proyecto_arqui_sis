@@ -17,4 +17,4 @@ RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
 
 # start app
-CMD ["npm", "ec2-dev"]
+CMD ["npm", "run", "ec2-dev"]

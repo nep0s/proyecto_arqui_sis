@@ -55,7 +55,7 @@ jobs:
       - run: python --version
       - run: pip --version
       - node/install-packages:
-          pkg-manager: npms
+          pkg-manager: npm
       # - run: npm test
       - run: pip install awscli --upgrade
       - run: aws --version

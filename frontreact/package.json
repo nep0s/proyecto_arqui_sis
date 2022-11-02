@@ -24,8 +24,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy-s3": "aws s3 sync build/ s3://cd-frontend --delete",
-    "invalidate-cloudfront": "aws cloudfront create-invalidation --distribution-id EM3FMU62T3JYO --paths '/*'",
-    "deploy": "yarn build && yarn run deploy-s3"
+    "invalidate-cloudfront": "aws cloudfront create-invalidation --distribution-id E2TMX0JKVVK3NH --paths '/*'",
+    "deploy": "yarn build && yarn run deploy-s3 && yarn run invalidate-cloudfront"
   },
   "eslintConfig": {
     "extends": [

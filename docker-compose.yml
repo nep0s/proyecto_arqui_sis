@@ -28,6 +28,15 @@ services:
       - "9000:9000"
     depends_on:
       - db
+  # front:
+  #   build: 
+  #     context: ./FrontEnd # The path in the machine that have the files, in this case root
+  #     dockerfile: Dockerfile
+  #   command: python3.10 manage.py runserver 0.0.0.0:2000
+  #   volumes:
+  #     - .:/FrontEnd/code
+  #   ports:
+  #     - "2000:2000"
   front:
     build: 
       context: ./frontreact # The path in the machine that have the files, in this case root
@@ -54,8 +63,6 @@ services:
       - redis
     expose:
       - 8000
-    ports:
-      - "8000:8000"
 
   celery_worker:
     build:
@@ -80,11 +87,21 @@ services:
       - redis
 
   nginx:
-    build: ./nginx
+    build: ./workers/nginx
     ports: 
       - 80:80
     depends_on:
       - web
+  front-nginx:
+    depends_on:
+      - front
+      - web
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "20:20"
 
 volumes:
     pgdata:

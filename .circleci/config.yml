@@ -46,6 +46,9 @@ jobs:
           command: pytest
   
   build-test-deploy:
+    branches:
+      only:
+        - master
     working_directory: ~/app/frontreact
     docker:
       - image: cimg/python:3.10.7-node
@@ -67,9 +70,6 @@ jobs:
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
-    branches:
-      only:
-        - master
     jobs:
       - build-and-test
       - build-test-deploy

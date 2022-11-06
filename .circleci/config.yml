@@ -74,8 +74,3 @@ workflows:
             only:
               - master
               
-      - build-test-deploy:
-        filters:
-          branches:
-            only:
-              - master

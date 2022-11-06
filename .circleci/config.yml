@@ -67,9 +67,10 @@ jobs:
 workflows:
   sample: # This is the name of the workflow, feel free to change it to better match your workflow.
     # Inside the workflow, you define the jobs you want to run.
-    branches:
-    only:
-     - master # list of branches to build
     jobs:
       - build-and-test
-      - build-test-deploy
+      - build-test-deploy:
+        filters:
+          branches:
+            only:
+              - develop

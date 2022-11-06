@@ -73,6 +73,7 @@ workflows:
           branches:
             only:
               - master
+              
       - build-test-deploy:
         filters:
           branches:

@@ -5,6 +5,8 @@ import EventTable from './EventTable';
 import LoginButton from '../Auth/LogInButton';
 import LogOutButton from '../Auth/LogOutButton';
 import Profile from '../Auth/Profile';
+import { useNavigate } from 'react-router-dom';
+
 
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -67,11 +69,19 @@ const getEvents = (events, setEvents) => {
 export const EventScreen = () => {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [events, setEvents]= useState([]);
+    const navigate = useNavigate();
 
     useMemo(() => getEvents(events, setEvents), [])
     return (
         <div style={{ display: "flex", flexDirection: "column", marginTop: "1%" }}>
-            
+            {isAuthenticated?
+            <button className="btn btn-link"
+            onClick={ () => {navigate(`/chat/1`) }}
+            >
+            Ir a sala de Chat General 
+            </button>
+            :
+            <h1>Registrate para chatear</h1>}
             {events.length !== 0?
             <EventTable events={ events } />
             :

@@ -5,32 +5,44 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const handlePermissions = () => {      
     try {
-      const accessToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InhCWGhOd0JpUW84YzlHZVRndzVnSSJ9.eyJpc3MiOiJodHRwczovL2Rldi1xOGZydmRveXByMmEweGYzLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJkbDBTdzBIR3QyVkdpdHNWdVh0N0NRZWRRcEtjR2RuMEBjbGllbnRzIiwiYXVkIjoiaHR0cDovL3Byb3llY3RvLWJhc2UtZ3J1cG8tMjQtd2ViLTE6ODAwMCIsImlhdCI6MTY2NzQyNzcxMCwiZXhwIjoxNjcwMDE5NzEwLCJhenAiOiJkbDBTdzBIR3QyVkdpdHNWdVh0N0NRZWRRcEtjR2RuMCIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.AtFfn_3OvOOLRb6wpn2Y9pn-bDRzviBLnteoVGqsqL6A9aaRqmsW8jK85eP21yjehi4vonrhXWntz1yARTjkx_7oIYiBbM9OOls-WwvMMbEy1vxdVrpjP9reCbehpoG9qIpSPUVnJdcG1xzOsP4m82utgRGSV_qngn48PBqGyv1Y8Y4shKYpBP1886rNwEEyjWDyvNv-ZZ8-xgw8x0LSgTWXqaiWCAYSs4fNJXgk0UvF7LlpJtChEQuIiuCyrZeA646T4wpjZzm8LQk1JCYvMZ1epP5sO5K_whtcqAb8Wbg3xb6jKDWBXwWiNewm7zrNLEcn0MFZPhR6-JOz-HjEFA'
+
+      const tokenChat = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MTY2ODUzOTU0Nywic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg0NTMxNDd9.hrR1aHXym6zUb0YFvc-Pv_XJk_Esjz6MymeLatJxiEo'
 // en postman este link no nos funciono funciono solo el con fecha
-      const UUID = "cadab196-62ac-11ed-9b6a-0242ac120002" ; //hardcodeado por ahora 
-      const permissionsUrl = `http://localhost:7777/rooms/1/members`;
-      fetch(messagesUrl, {
+      const UUID = "a5eb3a26-6451-11ed-81ce-0242ac120002" ; //hardcodeado por ahora 
+      const permissionsUrl = `http://localhost:7777/rooms/1/members/`;
+      fetch(permissionsUrl, {
         method: "PUT",
-        body: JSON.stringify(opts),
+        mode: 'cors',
+        body: JSON.stringify({
+          "userUUID": UUID,
+          "permissions":"rw",
+          "level":100
+        }),
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${tokenChat}`,
         },
       })
       .then(response => response.json())
+      
       .then(data => {
-        let _messages = data.url.body;
-        setMessages(_messages);
+        let permission = data.url;
         });
-
     } catch (e) {
       console.log(e.message);
+
     }
+    
   };
+
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-
+  
+ console.log(handlePermissions().response)
+  
   return (
+    
     isAuthenticated && (
       <div>
         
@@ -43,4 +55,3 @@ const Profile = () => {
 };
 
 export default Profile;
-// <img src={user.picture} alt={user.name} />

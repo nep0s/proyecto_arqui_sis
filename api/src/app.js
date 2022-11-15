@@ -8,6 +8,7 @@ const override = require('koa-override-method');
 const helmet = require('koa-helmet');
 const http = require('http');
 const qs = require('qs');
+const cors = require('@koa/cors');
 // const casbin = require('casbin')
 // const authz = require('koa-authz');
 
@@ -23,7 +24,7 @@ const websockify = require('koa-websocket');
 const orm = require('./models');
 
 const app = websockify(new Koa());
-
+app.use(cors());
 const developmentMode = app.env === 'development';
 const testMode = app.env === 'test';
 const productionMode = app.env === 'production';

@@ -5,8 +5,47 @@ import EventTable from './EventTable';
 import LoginButton from '../Auth/LogInButton';
 import LogOutButton from '../Auth/LogOutButton';
 import Profile from '../Auth/Profile';
+import { useNavigate } from 'react-router-dom';
+
 
 import { useAuth0 } from "@auth0/auth0-react";
+
+
+const handlePermissions = () => {      
+  try {
+
+    const tokenChat = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MTY2ODUzOTU0Nywic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg0NTMxNDd9.hrR1aHXym6zUb0YFvc-Pv_XJk_Esjz6MymeLatJxiEo'
+// en postman este link no nos funciono funciono solo el con fecha
+    const UUID = "a5eb3a26-6451-11ed-81ce-0242ac120002" ; //hardcodeado por ahora 
+    const permissionsUrl = `http://localhost:7777/rooms/1/members/`;
+    fetch(permissionsUrl, {
+      method: "PUT",
+      mode: 'cors',
+      body: JSON.stringify({
+        "userUUID": UUID,
+        "permissions":"rw",
+        "level":100
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenChat}`,
+      },
+    })
+    .then(response => response.json(), console.log("response"))
+    
+    .then(data => {
+      let permission = data.url; console.log("permission")
+      });
+  } catch (e) {
+    console.log("error");
+    console.log(e.message);
+    
+
+
+  }
+  
+};
+console.log(handlePermissions())
 
 
 const getToken = async (getAccessTokenSilently) => {
@@ -20,6 +59,7 @@ const getToken = async (getAccessTokenSilently) => {
     console.log(e.message);
   }
 }
+
 const getEvents = async (events, setEvents) => {
   const domain = "dev-q8frvdoypr2a0xf3.us.auth0.com";
 
@@ -59,7 +99,7 @@ const getEvents = async (events, setEvents) => {
 export const EventScreen = () => {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const [events, setEvents]= useState([]);
-    
+    const navigate = useNavigate();
 
     useMemo(() => {
       if (isAuthenticated) {
@@ -69,7 +109,14 @@ export const EventScreen = () => {
     }, [isAuthenticated])
     return (
         <div style={{ display: "flex", flexDirection: "column", marginTop: "1%" }}>
-            
+            {isAuthenticated?
+            <button className="btn btn-link"
+            onClick={ () => {navigate(`/chat/1`) }}
+            >
+            Ir a sala de Chat General 
+            </button>
+            :
+            <h1>Registrate para chatear</h1>}
             {events.length !== 0?
             <EventTable events={ events } />
             :

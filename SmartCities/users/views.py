@@ -11,6 +11,8 @@ from users.serializers import UserLoginSerializer, UserModelSerializer, UserSign
 # Models
 from users.models import User
 
+import json
+import requests
 class UserViewSet(viewsets.GenericViewSet):
 
     queryset = User.objects.filter(is_active=True)
@@ -37,4 +39,16 @@ class UserViewSet(viewsets.GenericViewSet):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         data = UserModelSerializer(user).data
+        dataRoom = {
+                    "userUUID":"2c9227a6-63a3-11ed-81ce-0242ac120002",
+                    "permissions":"rw",
+                     "level":100
+                    }
+        #Dar acceso a room general 
+        url = 'http://proyecto-base-grupo-24-api:7777/rooms/1/members'
+        x = requests.put(url, json =dataRoom, verify=False)
+        print(x) 
+
+
+
         return Response(data, status=status.HTTP_201_CREATED)

@@ -11,3 +11,12 @@ class MapSerializer_workers(serializers.ModelSerializer):
         fields = ['level', 'lat', 'lon']
         
 
+class MapSerializer_detail(serializers.ModelSerializer):
+    class Meta:
+        model = Maps
+        fields = ['id', 'type1', 'lat', 'lon', 'location','message', 'level', 'complejidad']
+
+class MapSerializer_detail_workers(serializers.ModelSerializer):
+    class Meta:
+        model = Maps
+        fields = ['complejidad']

@@ -11,5 +11,6 @@ class Maps(models.Model):
     location = models.CharField(null=True, max_length=255)
     message = models.TextField(null =True, max_length=255)
     level = models.IntegerField(null = True)
+    complejidad = models.FloatField(null =True)
 
     

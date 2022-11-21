@@ -38,18 +38,13 @@ def read_root():
 @app.get("/job/")
 def get_execute_job():
     wait_and_return.delay(2,2)
-    return {"job": "executed"}
+    return {"job": "executed 0"}
 
 class dicionario(BaseModel):
     dicts: dict
 
-
 @app.get("/complejidad/{id}")
 def get_complejidad(dicionario: dicionario, id: int):
-
-  
-    print("dicionario 2")
-    print(dicionario)
     suma = 0 
     niv =[]
     lati = []
@@ -66,11 +61,12 @@ def get_complejidad(dicionario: dicionario, id: int):
                 niv.append(nivel)
                 lati.append(lat)
                 long_1.append(lon)
-    wait_and_return.delay(niv, lati, long_1, actual)
-    print("ya hice el jobbb")
-    return {"job": "executed"}
-
-
+    suma = wait_and_return.delay(niv, lati, long_1, actual)
+    print(suma.ready())
+    
+    while suma.ready() == False:
+        pass
+    return {"complejidad": suma.result}
 
 
 

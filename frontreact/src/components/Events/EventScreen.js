@@ -106,7 +106,7 @@ export const EventScreen = () => {
       if (isAuthenticated) {
         getToken(getAccessTokenSilently).then(token => {
           console.log(token)
-          //getEvents(events, setEvents, token);
+          getEvents(events, setEvents, token);
         });
       }
     }, [isAuthenticated])

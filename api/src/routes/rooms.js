@@ -68,25 +68,24 @@ router.route({
   method: 'GET',
   path: '/',
   validate: {
+    
     query: {
       limit: Joi.number(),
       offset: Joi.number(),
       accepted: Joi.boolean(),
     },
+
   },
+
+  
   handler: async (ctx) => {
-    const rooms = await ctx.orm.Room_permission.findAll({
-      where: {
-        entity_UUID: ctx.state.tokendata.userUUID,
-        accepted: ctx.request.query.accepted,
-      },
-      limit: ctx.request.query.limit,
-      offset: ctx.request.query.offset,
-    });
+    console.log(ctx)
+    const rooms = await ctx.orm.Room.findAll();
     ctx.status = 200;
     ctx.response.json = rooms;
   },
 });
+
 
 // Creates invitation for a new member.
 router.route({

@@ -20,7 +20,6 @@ export const RoomSelectScreen = () => {
             // Revisar si content es lo que tiene los mensajes
             let _rooms = data.content;
             setRooms(_rooms);
-            console.log(_rooms)
             });
     
         } catch (e) {
@@ -39,13 +38,19 @@ export const RoomSelectScreen = () => {
                 <tbody>
                     <tr>
                         <th scope="col">Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Level Admin</th>
                     </tr>
                     {
                         rooms.map(room =>
                             <tr key={room.id}>
                                 <td >{ room.id }</td>
+                                <td >{ room.name }</td>
+                                <td >{ room.type }</td>
+                                <td >{ room.level_admin }</td>
                                 <td><button className="btn btn-link"
-                                    onClick={ () => {navigate(`/${room.id}`) }}
+                                    onClick={ () => {navigate(`/chat/${room.id}`) }}
                                     >
                                     Ingresar al chat
                                     </button>

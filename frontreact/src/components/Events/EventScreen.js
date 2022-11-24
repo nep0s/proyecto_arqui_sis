@@ -112,11 +112,18 @@ export const EventScreen = () => {
     return (
         <div style={{ display: "flex", flexDirection: "column", marginTop: "1%" }}>
             {isAuthenticated?
+            <div>
             <button className="btn btn-link"
             onClick={ () => {navigate(`/chat/1`) }}
             >
             Ir a sala de Chat General 
             </button>
+            <button className="btn btn-link"
+            onClick={ () => {navigate(`/rooms`) }}
+            >
+            Ir a la selección de chats
+            </button>
+            </div>
             :
             <h1>Registrate para chatear</h1>}
             {events.length !== 0?

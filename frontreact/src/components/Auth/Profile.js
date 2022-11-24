@@ -71,7 +71,6 @@ const Profile = () => {
 
   getUserMetadata();
 }, [getAccessTokenSilently, user?.sub]);
-
   if (isLoading) {
     return <div>Loading ...</div>;
   }

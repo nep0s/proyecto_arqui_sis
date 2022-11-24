@@ -13,7 +13,8 @@ const Profile = () => {
         audience: `http://proyecto-base-grupo-24-web-1:8000`,
         scope: "read:current_user",
       });
-      console.log(accessToken)
+      console.log(accessToken);
+      localStorage.setItem('accessToken', JSON.stringify(accessToken));
       return accessToken
 
     } catch (e) {
@@ -38,7 +39,8 @@ const Profile = () => {
         },
         });
         const { user_metadata } = await metadataResponse.json();
-        console.log(user_metadata)
+        console.log(user_metadata);
+        localStorage.setItem('UUID', JSON.stringify(user_metadata.UUID));
         setUserMetadata(user_metadata);
         
         const token = await getToken(getAccessTokenSilently)

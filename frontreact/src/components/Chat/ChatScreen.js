@@ -11,6 +11,7 @@ export const ChatScreen = () => {
     const [socket, setSocket] = useState(null);
     const handleMessagesChat = () => {      
         try {
+        //   const accessToken = JSON.parse(localStorage.getItem('accessToken'));
           const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MjUzMjc4MjQxMSwic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg3ODI0MTF9.7PWs9qsmUSTJ-EKUzoZkki_devfHxlraKRVhG9B0dbQ'
           const messagesUrl = `http://localhost:7777/rooms/${id}/messages`;
           fetch(messagesUrl, {
@@ -23,6 +24,7 @@ export const ChatScreen = () => {
           .then(data => {
             // Revisar si content es lo que tiene los mensajes
             let _messages = data.content;
+            console.log(_messages);
             setMessages(_messages);
             });
     
@@ -67,10 +69,11 @@ export const ChatScreen = () => {
      
     //console.log('Message from server ', event_data);
     if (event_data.data === "START?"){
+        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
         socket.send(JSON.stringify(
             {
                 "type":"token",
-                "content":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MjUzMjc4MjQxMSwic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg3ODI0MTF9.7PWs9qsmUSTJ-EKUzoZkki_devfHxlraKRVhG9B0dbQ"
+                "content": accessToken
 
             }));}
     if (event_data.data === "READY"){

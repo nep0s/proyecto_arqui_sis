@@ -77,7 +77,7 @@ export const ChatScreen = () => {
         socket.send(JSON.stringify(
             {
                 "type":"select_room",
-                "room_id":1
+                "room_id":id
             }));
 
     }

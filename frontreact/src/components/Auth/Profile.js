@@ -26,25 +26,25 @@ const Profile = () => {
     const userUrl = "https://dev-q8frvdoypr2a0xf3.us.auth0.com/userinfo"
 
     try {
-      /*
-      const token = getToken(getAccessTokenSilently)
+      const token = await getToken(getAccessTokenSilently)
       fetch(userUrl, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
       })
-      /* Para ver errores:
+      //  Para ver errores:
       .then(response => response.text())
       .then(data => console.log(data))
       
       
-      .then(response => response.json())
-      .then(data => {
-        let _events = data.body;
-        console.log(_events);
-        });
-      */
+      // .then(response => response.json())
+      // .then(data => {
+      //   let _events = data.body;
+      //   console.log(_events);
+      //   });
       
     } catch (e) {
       console.log(e.message);

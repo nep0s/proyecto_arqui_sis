@@ -1,57 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
+
 const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-//   const handlePermissions = () => {      
-//     try {
+  const { user, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
+  const [userMetadata, setUserMetadata] = useState(null);
 
-//       const tokenChat = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MTY2ODUzOTU0Nywic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg0NTMxNDd9.hrR1aHXym6zUb0YFvc-Pv_XJk_Esjz6MymeLatJxiEo'
-// // en postman este link no nos funciono funciono solo el con fecha
-//       const UUID = "a5eb3a26-6451-11ed-81ce-0242ac120002" ; //hardcodeado por ahora 
-//       const permissionsUrl = `http://localhost:7777/rooms/1/members/`;
-//       fetch(permissionsUrl, {
-//         method: "PUT",
-//         mode: 'cors',
-//         body: JSON.stringify({
-//           "userUUID": UUID,
-//           "permissions":"rw",
-//           "level":100
-//         }),
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Authorization': `Bearer ${tokenChat}`,
-//         },
-//       })
-//       .then(response => response.json(), console.log("response"))
+  
+  const getToken = async (getAccessTokenSilently) => {
+    try {
+      const accessToken = await getAccessTokenSilently({
+        audience: `http://proyecto-base-grupo-24-web-1:8000`,
+        scope: "read:current_user",
+      });
+      return accessToken
+
+    } catch (e) {
+      console.log(e.message);
+    };
+  };
+
+  useEffect(() => {
+  const getUserMetadata = async () => {
+    const domain = "dev-q8frvdoypr2a0xf3.us.auth0.com";
+    const userUrl = "https://dev-q8frvdoypr2a0xf3.us.auth0.com/userinfo"
+
+    try {
+      /*
+      const token = getToken(getAccessTokenSilently)
+      fetch(userUrl, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      /* Para ver errores:
+      .then(response => response.text())
+      .then(data => console.log(data))
       
-//       .then(data => {
-//         let permission = data.url; console.log("permission")
-//         });
-//     } catch (e) {
-//       console.log("error");
-//       console.log(e.message);
       
+      .then(response => response.json())
+      .then(data => {
+        let _events = data.body;
+        console.log(_events);
+        });
+      */
+      
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
-
-//     }
-    
-//   };
+  getUserMetadata();
+}, [getAccessTokenSilently, user?.sub]);
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
   
-//  console.log(handlePermissions())
-  
   return (
-    
     isAuthenticated && (
       <div>
-        
         <h2>{user.name}</h2>
         <p>{user.email}</p>
-        
+        <h3>User Metadata</h3>
+        {userMetadata ? (
+          <pre>{JSON.stringify(userMetadata, null, 2)}</pre>
+        ) : (
+          "No user metadata defined"
+        )}
       </div>
     )
   );

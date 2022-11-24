@@ -8,6 +8,16 @@ export default function SignupScreen() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
 
+    const signupURL = "https://dev-q8frvdoypr2a0xf3.us.auth0.com/dbconnections/signup"
+    const data = {
+        "client_id": "6Z7Uj8y7uPGY1DsN09qsBu0N88nSI5Ji",
+        "email": "EMAIL2@mail.com",
+        "password": "trust_n01",
+        "connection": "Username-Password-Authentication",
+        "username": "johndoe2",
+        "user_metadata": { "UUID": "1234" }
+      }
+
 
     return (
         <>

@@ -105,7 +105,6 @@ export const EventScreen = () => {
     useMemo(() => {
       if (isAuthenticated) {
         getToken(getAccessTokenSilently).then(token => {
-          console.log(token)
           getEvents(events, setEvents, token);
         });
       }

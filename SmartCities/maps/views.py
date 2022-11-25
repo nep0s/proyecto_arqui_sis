@@ -20,7 +20,13 @@ def map_list(request):
     if request.method == 'GET':
         maps = Maps.objects.all().order_by('id')[0:3000]
         serializer = MapSerializer(maps, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return JsonResponse({'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'body': serializer.data})
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
@@ -37,7 +43,13 @@ def map_detail(request, id):
         maps_1 = Maps.objects.get(id=id)
         serializer = MapSerializer_detail(maps_1, many=False)
         print(serializer.data)
-        return JsonResponse(serializer.data, safe=False)
+        return JsonResponse({'statusCode': 200,
+        'headers': {
+            'Access-Control-Allow-Headers': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+        },
+        'body': serializer.data})
 
     if request.method == 'POST':
         maps_2 = Maps.objects.all()[0:2000]

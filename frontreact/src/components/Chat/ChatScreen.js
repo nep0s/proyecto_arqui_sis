@@ -15,7 +15,7 @@ export const ChatScreen = () => {
           const tokenChat = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MjUzMjc4MjQxMSwic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg3ODI0MTF9.7PWs9qsmUSTJ-EKUzoZkki_devfHxlraKRVhG9B0dbQ'
       // en postman este link no nos funciono funciono solo el con fecha
           const UUID = JSON.parse(localStorage.getItem('UUID'));
-          const permissionsUrl = `http://localhost:7777/rooms/${id}/members/`;
+          const permissionsUrl = `http://18.232.245.49:7777/rooms/${id}/members`;
           fetch(permissionsUrl, {
             method: "PUT",
             mode: 'cors',
@@ -32,7 +32,7 @@ export const ChatScreen = () => {
           .then(response => response.json(), console.log("response"))
           
           .then(data => {
-            let permission = data.url; console.log("permission")
+            console.log(data)
             });
           
         }
@@ -43,7 +43,7 @@ export const ChatScreen = () => {
         try {
         //   const accessToken = JSON.parse(localStorage.getItem('accessToken'));
           const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MjUzMjc4MjQxMSwic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg3ODI0MTF9.7PWs9qsmUSTJ-EKUzoZkki_devfHxlraKRVhG9B0dbQ'
-          const messagesUrl = `http://localhost:7777/rooms/${id}/messages`;
+          const messagesUrl = `http://18.232.245.49:7777/rooms/${id}/messages`;
           fetch(messagesUrl, {
             method: "GET",
             headers: {
@@ -91,6 +91,7 @@ export const ChatScreen = () => {
         setText(text);
       };
     const handleSendMessage = (text) => {
+        console.log(event_data)
         if (event_data.data === "CONNECTED"){
         // console.log('Message from server ', JSON.parse(event_data));
         
@@ -104,7 +105,7 @@ export const ChatScreen = () => {
             }))};}};
     
     useEffect(() => {
-        const _socket = new WebSocket('ws://localhost:7777/chat');
+        const _socket = new WebSocket('wss://qsuvwmic07.execute-api.us-east-1.amazonaws.com/develop');
         setSocket(_socket);
         if(JSON.parse(localStorage.getItem('Verified_responder')) === "true"){
             handlePermissions();

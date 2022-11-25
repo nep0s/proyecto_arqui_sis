@@ -24,7 +24,17 @@ export const ChatScreen = () => {
           .then(data => {
             // Revisar si content es lo que tiene los mensajes
             let _messages = data.content;
-            console.log(_messages);
+            _messages.forEach(message => {
+                message.verified_responder = message.content.slice(0,1)
+                if(message.verified_responder === "F")
+                {
+                    message.verified_responder = "False"
+                }
+                else{
+                    message.verified_responder = "True"
+                }
+                message.content = message.content.slice(1)
+            });
             setMessages(_messages);
             });
     
@@ -40,11 +50,17 @@ export const ChatScreen = () => {
         return messages.slice(firstPageIndex, lastPageIndex);
     }, [currentPage, messages]);
     function handleChange(event) {
-        setText(event.target.value);
+        let text = "";
+        if(JSON.parse(localStorage.getItem('Verified_responder')) === "true")
+        {
+            text = "T"+event.target.value;
+        }
+        else{
+            text = "F"+event.target.value;
+        }
+        setText(text);
       };
     const handleSendMessage = (text) => {
-        console.log(event_data);
-        console.log(text);
         if (event_data.data === "CONNECTED"){
         // console.log('Message from server ', JSON.parse(event_data));
         
@@ -69,7 +85,7 @@ export const ChatScreen = () => {
      
     //console.log('Message from server ', event_data);
     if (event_data.data === "START?"){
-        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+        const accessToken = JSON.parse(localStorage.getItem('chatToken'));
         socket.send(JSON.stringify(
             {
                 "type":"token",
@@ -107,6 +123,7 @@ export const ChatScreen = () => {
                          <th scope="col">Emitter</th>
                          <th scope="col">Contenido</th>
                          <th scope="col">Fecha</th>
+                         <th scope="col">Verified responder</th>
                      </tr>
                      {
                          currentTableData.map((message, index) =>
@@ -116,6 +133,7 @@ export const ChatScreen = () => {
                                  <td>{ message.emitter }</td>
                                  <td>{ message.content }</td>
                                  <td>{ message.createdAt }</td>
+                                 <td>{ message.verified_responder }</td>
                              </tr>
                          )
                      }

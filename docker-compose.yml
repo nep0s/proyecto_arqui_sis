@@ -32,24 +32,6 @@ services:
       - name=value
       - NEW_RELIC_LICENSE_KEY= 6ddad6f864f18719931d7dff1fa8b5f708e5NRAL
       - NEW_RELIC_APP_NAME= "catalina"
-  # front:
-  #   build: 
-  #     context: ./FrontEnd # The path in the machine that have the files, in this case root
-  #     dockerfile: Dockerfile
-  #   command: python3.10 manage.py runserver 0.0.0.0:2000
-  #   volumes:
-  #     - .:/FrontEnd/code
-  #   ports:
-  #     - "2000:2000"
-  front:
-    build: 
-      context: ./frontreact # The path in the machine that have the files, in this case root
-      dockerfile: Dockerfile
-    volumes:
-      - './frontreact/src:/app/src'
-      - '/app/node_modules'
-    ports:
-      - "3000:3000"
 
   redis:
     image: redis:7.0.0-alpine

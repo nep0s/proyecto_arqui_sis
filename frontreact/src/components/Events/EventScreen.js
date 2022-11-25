@@ -16,7 +16,7 @@ const handlePermissions = () => {
 
     const tokenChat = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MjUzMjc4MjQxMSwic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg3ODI0MTF9.7PWs9qsmUSTJ-EKUzoZkki_devfHxlraKRVhG9B0dbQ'
 // en postman este link no nos funciono funciono solo el con fecha
-    const UUID = "399f204e-62ad-11ed-9b6a-0242ac120002" ; //hardcodeado por ahora 
+    const UUID = JSON.parse(localStorage.getItem('UUID'));
     const permissionsUrl = `http://localhost:7777/rooms/1/members/`;
     fetch(permissionsUrl, {
       method: "PUT",
@@ -36,15 +36,28 @@ const handlePermissions = () => {
     .then(data => {
       let permission = data.url; console.log("permission")
       });
+    const tokenUrl = `http://localhost:7777/rooms/token/`;
+    fetch(tokenUrl, {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        "UUID": UUID
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenChat}`,
+      },
+    })
+    .then(response => response.json())
+    
+    .then(data => {
+      localStorage.setItem('chatToken', JSON.stringify(data.content.token));
+      });
   } catch (e) {
     console.log("error");
     console.log(e.message);
     
-
-
-  }
-  
-};
+  };}
 console.log(handlePermissions())
 
 
@@ -105,7 +118,6 @@ export const EventScreen = () => {
     useMemo(() => {
       if (isAuthenticated) {
         getToken(getAccessTokenSilently).then(token => {
-          console.log(token)
           getEvents(events, setEvents, token);
         });
       }
@@ -113,11 +125,18 @@ export const EventScreen = () => {
     return (
         <div style={{ display: "flex", flexDirection: "column", marginTop: "1%" }}>
             {isAuthenticated?
+            <div>
             <button className="btn btn-link"
             onClick={ () => {navigate(`/chat/1`) }}
             >
             Ir a sala de Chat General 
             </button>
+            <button className="btn btn-link"
+            onClick={ () => {navigate(`/rooms`) }}
+            >
+            Ir a la selección de chats
+            </button>
+            </div>
             :
             <h1>Registrate para chatear</h1>}
             {events.length !== 0?

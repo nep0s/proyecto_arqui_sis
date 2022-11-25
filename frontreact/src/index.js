@@ -18,7 +18,7 @@ root.render(
     clientId="VNVz3a9lyUuxe3XDipjMwC54OpjMwO8k"
     redirectUri={window.location.origin}
     audience="http://proyecto-base-grupo-24-web-1:8000"
-    scope="read:events"
+    scope="openid update:current_user_metadata read:current_user"
   >
   <React.StrictMode>
     <LoginButton/>

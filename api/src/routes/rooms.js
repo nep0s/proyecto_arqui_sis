@@ -2,6 +2,9 @@ const jRouter = require('koa-joi-router');
 
 const { Joi } = jRouter;
 const { Op } = require('sequelize');
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
+dotenv.config();
 
 const router = jRouter();
 
@@ -68,25 +71,23 @@ router.route({
   method: 'GET',
   path: '/',
   validate: {
+    
     query: {
       limit: Joi.number(),
       offset: Joi.number(),
       accepted: Joi.boolean(),
     },
+
   },
+
+  
   handler: async (ctx) => {
-    const rooms = await ctx.orm.Room_permission.findAll({
-      where: {
-        entity_UUID: ctx.state.tokendata.userUUID,
-        accepted: ctx.request.query.accepted,
-      },
-      limit: ctx.request.query.limit,
-      offset: ctx.request.query.offset,
-    });
+    const rooms = await ctx.orm.Room.findAll();
     ctx.status = 200;
     ctx.response.json = rooms;
   },
 });
+
 
 // Creates invitation for a new member.
 router.route({
@@ -230,6 +231,44 @@ router.route({
     }
   },
 });
+
+// create token
+router.route({
+  method: 'POST',
+  path: '/token',
+  validate: {
+    type: 'json',
+    body: {
+      UUID: Joi.string().guid()
+    },
+  },
+  pre: async (ctx, next) => {
+    return next();
+  },
+  handler: async (ctx) => {
+    const defaultOrganization = '9bc91a48-f27f-4df3-b1d7-136ce4f7a5dd';
+    const currentTimeEpoch = Math.floor(Date.now() / 1000);
+    const hoursUntilExpiration = 24;
+    const expiryTimeEpoch = currentTimeEpoch + (hoursUntilExpiration * 60 * 60);
+    const tokenJson = ctx.request.body;
+    const payload = {
+      aud: process.env.AUDIENCE, // aud must be the same as the one in the chat api
+      iss: process.env.ISSUER, // iss must be the same as the one in the chat api
+      exp: expiryTimeEpoch, // Epoch time must be later than now
+      sub: tokenJson.UUID,
+      entityUUID: defaultOrganization,
+      userUUID: tokenJson.UUID,
+      levelOnEntity: 999
+    }
+    const token = jwt.sign(
+      payload,
+      process.env.JWT_MASTER_SECRET
+    );
+    ctx.response.json = { token };
+    ctx.status = 200;
+  },
+});
+
 
 // remove from room via rule deletion
 router.route({

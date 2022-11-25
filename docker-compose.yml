@@ -78,9 +78,9 @@ services:
       - 80:80
     depends_on:
       - web
+
   front-nginx:
     depends_on:
-      - front
       - web
     restart: always
     build:

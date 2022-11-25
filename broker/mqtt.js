@@ -113,11 +113,10 @@ client.on('message',function(topic, message, packet){
 	console.log("message is "+ message);
 	console.log("topic is "+ topic);
     var dic = JSON.parse(message)
-
-    if (parseInt(dic["level"]) >= 9000) {
-        CreateRoom(dic["location"])
+    console.log(parseInt(dic["level"]))
+    if (parseInt(dic["level"]) >= 900) {
         
-
+        CreateRoom(dic["location"])
     }
     
     insertLoc(dic["type"], dic["lat"], dic["lon"], dic["location"], dic["message"],dic["level"]).then(result => {

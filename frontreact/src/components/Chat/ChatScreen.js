@@ -9,6 +9,36 @@ export const ChatScreen = () => {
     const [event_data, setEventData] = useState([]);
     const [text, setText] = useState("");
     const [socket, setSocket] = useState(null);
+    const handlePermissions = () => {      
+        try {
+      
+          const tokenChat = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJodHRwczovL2NoYXQubmFuby5uZXQiLCJpc3MiOiJodHRwczovL2FwaS5uYW5vLm5ldCIsImV4cCI6MjUzMjc4MjQxMSwic3ViIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwiZW50aXR5VVVJRCI6IjliYzkxYTQ4LWYyN2YtNGRmMy1iMWQ3LTEzNmNlNGY3YTVkZCIsInVzZXJVVUlEIjoiNjhhM2FmOTQtNjM4YS0xMWVkLTgxY2UtMDI0MmFjMTIwMDAyIiwibGV2ZWxPbkVudGl0eSI6OTk5LCJpYXQiOjE2Njg3ODI0MTF9.7PWs9qsmUSTJ-EKUzoZkki_devfHxlraKRVhG9B0dbQ'
+      // en postman este link no nos funciono funciono solo el con fecha
+          const UUID = JSON.parse(localStorage.getItem('UUID'));
+          const permissionsUrl = `http://localhost:7777/rooms/${id}/members/`;
+          fetch(permissionsUrl, {
+            method: "PUT",
+            mode: 'cors',
+            body: JSON.stringify({
+              "userUUID": UUID,
+              "permissions":"rw",
+              "level":100
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${tokenChat}`,
+            },
+          })
+          .then(response => response.json(), console.log("response"))
+          
+          .then(data => {
+            let permission = data.url; console.log("permission")
+            });
+          
+        }
+        catch (e) {
+            console.log(e.message);
+          };}
     const handleMessagesChat = () => {      
         try {
         //   const accessToken = JSON.parse(localStorage.getItem('accessToken'));
@@ -76,6 +106,9 @@ export const ChatScreen = () => {
     useEffect(() => {
         const _socket = new WebSocket('ws://localhost:7777/chat');
         setSocket(_socket);
+        if(JSON.parse(localStorage.getItem('Verified_responder')) === "true"){
+            handlePermissions();
+        }
     },[])
 // Listen for messages
     if(socket !== null){

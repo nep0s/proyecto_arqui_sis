@@ -36,15 +36,28 @@ const handlePermissions = () => {
     .then(data => {
       let permission = data.url; console.log("permission")
       });
+    const tokenUrl = `http://localhost:7777/rooms/token/`;
+    fetch(tokenUrl, {
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        "UUID": UUID
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenChat}`,
+      },
+    })
+    .then(response => response.json())
+    
+    .then(data => {
+      localStorage.setItem('chatToken', JSON.stringify(data.content.token));
+      });
   } catch (e) {
     console.log("error");
     console.log(e.message);
     
-
-
-  }
-  
-};
+  };}
 console.log(handlePermissions())
 
 

@@ -41,6 +41,7 @@ const Profile = () => {
         const { user_metadata } = await metadataResponse.json();
         console.log(user_metadata);
         localStorage.setItem('UUID', JSON.stringify(user_metadata.UUID));
+        localStorage.setItem('Verified_responder', JSON.stringify(user_metadata.verified_responder));
         setUserMetadata(user_metadata);
         
         const token = await getToken(getAccessTokenSilently)

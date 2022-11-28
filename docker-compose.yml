@@ -82,15 +82,12 @@ services:
   front-nginx:
     depends_on:
       - web
-      - api
     restart: always
     build:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
       - "20:20"
-      - "7777:7777"
-
   dbChat:
     image: postgres:13
     volumes:
@@ -103,14 +100,14 @@ services:
     build:
       context: api
       dockerfile: Dockerfile.dev
+    container_name: api
     restart: always
     volumes:
       - /usr/src/api/node_modules
       - ./api/:/usr/src/api
-    expose:
-      - "7777"
     ports:
-      - "9229"
+      - "7777:7777"
+      - "9229:9229"
     command:
       "npm run debug"
     env_file: 
@@ -127,8 +124,3 @@ services:
 volumes:
   messagingDB:
   pgdata:
-
-networks:
-  default:
-    driver: bridge
-    name: api

@@ -87,7 +87,7 @@ services:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - "22:22"
+      - "22"
   dbChat:
     image: postgres:13
     volumes:

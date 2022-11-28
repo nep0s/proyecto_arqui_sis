@@ -110,7 +110,7 @@ services:
     expose:
       - "7777"
     ports:
-      - "9229:9229"
+      - "9229"
     command:
       "npm run debug"
     env_file: 

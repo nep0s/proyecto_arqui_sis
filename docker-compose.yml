@@ -89,7 +89,7 @@ services:
       context: ./nginx
     ports:
       - "20:20"
-      - "7777:7777"
+      - "7777"
 
   dbChat:
     image: postgres:13

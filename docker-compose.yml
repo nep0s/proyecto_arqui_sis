@@ -90,8 +90,6 @@ services:
     ports:
       - "20:20"
       - "7777:7777"
-    volumes:
-      - /etc/nginx/conf.d/default.conf
 
   dbChat:
     image: postgres:13

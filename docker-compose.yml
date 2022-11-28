@@ -29,7 +29,6 @@ services:
       - "9000:9000"
     depends_on:
       - db
-    environment:
       - name=value
       - NEW_RELIC_LICENSE_KEY= 6ddad6f864f18719931d7dff1fa8b5f708e5NRAL
       - NEW_RELIC_APP_NAME= "catalina"

@@ -105,7 +105,7 @@ services:
     build:
       context: api
       dockerfile: Dockerfile.dev
-    container_name: api
+    container_name: api-1
     restart: always
     volumes:
       - /usr/src/api/node_modules

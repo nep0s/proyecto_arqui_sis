@@ -106,9 +106,8 @@ services:
     volumes:
       - /usr/src/api/node_modules
       - ./api/:/usr/src/api
-    expose:
-      - "7777"
     ports:
+      - "7777"
       - "9229"
     command:
       "npm run debug"
